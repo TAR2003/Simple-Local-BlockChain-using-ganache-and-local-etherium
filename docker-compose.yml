@@ -44,11 +44,11 @@ services:
 
   voting-api:
     build:
-      context: ./microservice
+      context: ./blockchain-microservice
       dockerfile: Dockerfile
     container_name: voting-api
     ports:
-      - "5000:5000"
+      - "5002:5002"
     depends_on:
       - ganache
       - blockchain-deployer
