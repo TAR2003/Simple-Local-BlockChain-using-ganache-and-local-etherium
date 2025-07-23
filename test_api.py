@@ -11,7 +11,7 @@ import sys
 import hashlib
 from datetime import datetime
 
-API_BASE_URL = "http://localhost:5000"
+API_BASE_URL = "http://localhost:5002"
 
 def test_health():
     """Test the health endpoint"""

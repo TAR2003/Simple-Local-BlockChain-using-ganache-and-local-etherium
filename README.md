@@ -29,7 +29,7 @@ docker-compose up -d
 The system will:
 1. Start Ganache blockchain on port 8545
 2. Deploy smart contracts automatically (no manual intervention needed)
-3. Start the Flask API service on port 5000
+3. Start the Flask API service on port 5002
 4. Be ready for API calls within 30 seconds
 
 **Test the system:**
@@ -43,13 +43,13 @@ Expected output: ✅ All 5 tests should pass
 
 ### 1. Health Check
 ```
-GET /health
+GET /health (port 5002)
 ```
 Returns the system status and blockchain connection information.
 
 ### 2. Record Ballot (Backend Only)
 ```
-POST /record-ballot
+POST /record-ballot (port 5002)
 Content-Type: application/json
 
 {
@@ -62,13 +62,13 @@ Records a ballot on the blockchain. Only callable by the backend system.
 
 ### 3. Verify Ballot (Public)
 ```
-GET /verify-ballot?election_id=election-2024-001&tracking_code=TRK123456789&ballot_hash=a1b2c3d4e5f6...
+GET /verify-ballot?election_id=election-2024-001&tracking_code=TRK123456789&ballot_hash=a1b2c3d4e5f6... (port 5002)
 ```
 Verifies if a ballot exists on the blockchain and returns timestamp information.
 
 ### 4. Get Ballot Info (Public)
 ```
-GET /ballot/TRK123456789
+GET /ballot/TRK123456789 (port 5002)
 ```
 Retrieves ballot information by tracking code.
 
@@ -76,7 +76,7 @@ Retrieves ballot information by tracking code.
 
 ### Record a Ballot
 ```bash
-curl -X POST http://localhost:5000/record-ballot \
+curl -X POST http://localhost:5002/record-ballot \
   -H "Content-Type: application/json" \
   -d '{
     "election_id": "election-2024-001",
@@ -87,12 +87,12 @@ curl -X POST http://localhost:5000/record-ballot \
 
 ### Verify a Ballot
 ```bash
-curl "http://localhost:5000/verify-ballot?election_id=election-2024-001&tracking_code=TRK123456789&ballot_hash=a1b2c3d4e5f67890abcdef1234567890"
+curl "http://localhost:5002/verify-ballot?election_id=election-2024-001&tracking_code=TRK123456789&ballot_hash=a1b2c3d4e5f67890abcdef1234567890"
 ```
 
 ### Get Ballot Information
 ```bash
-curl "http://localhost:5000/ballot/TRK123456789"
+curl "http://localhost:5002/ballot/TRK123456789"
 ```
 
 ## Security Features
@@ -111,7 +111,7 @@ curl "http://localhost:5000/ballot/TRK123456789"
 ## Ports
 
 - **8545** - Ganache blockchain
-- **5000** - Flask API service
+- **5002** - Flask API service
 
 ## Development
 
@@ -150,7 +150,7 @@ All configuration is handled through Docker Compose environment variables:
 
 ### Check System Health
 ```bash
-curl http://localhost:5000/health
+curl http://localhost:5002/health
 ```
 
 ### View Logs
